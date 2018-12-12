@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% comment %} <meta=name="viewport" content="width=device-with, initial-scale1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> {% endcomment %}
+    <title>Drum</title>
+    <link rel="stylesheet" href="drum.css">
+</head>
+
+<body>
+    <div class="keys">
+        <div data-key="65" class="key">
+            <kbd>A</kbd>
+            <span class="sound">daisy</span>
+        </div>
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">bowser</span>
+        </div>
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">brick</span>
+        </div>
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">woohoo</span>
+        </div>
+        <div data-key="71" class="key">
+            <kbd>G</kbd>
+            <span class="sound">bounus</span>
+        </div>
+        <div data-key="72" class="key">
+            <kbd>H</kbd>
+            <span class="sound">mario</span>
+        </div>
+        <div data-key="74" class="key">
+            <kbd>J</kbd>
+            <span class="sound">level end</span>
+        </div>
+        <div data-key="75" class="key">
+            <kbd>K</kbd>
+            <span class="sound">star</span>
+        </div>
+        <div data-key="76" class="key">
+            <kbd>L</kbd>
+            <span class="sound">yoshi</span>
+        </div>
+    </div>
+
+    <audio data-key="65" src="sounds/babydaisy.wav"></audio>
+    <audio data-key="83" src="sounds/bowser_tomb.wav"></audio>
+    <audio data-key="68" src="sounds/brick.wav"></audio>
+    <audio data-key="70" src="sounds/daisy_woohoo.wav"></audio>
+    <audio data-key="71" src="sounds/end.wav"></audio>
+    <audio data-key="72" src="sounds/mario.wav"></audio>
+    <audio data-key="74" src="sounds/smb_100secondes.wav"></audio>
+    <audio data-key="75" src="sounds/star.mp3"></audio>
+    <audio data-key="76" src="sounds/yoshi.wav"></audio>
+
+    <script>
+        function removeTransition(e) {
+            if (e.propertyName !== 'transform') return;
+            e.target.classList.remove('playing');
+        }
+        function playSound(e) {
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+            if (!audio) return;
+            key.classList.add('playing');
+            audio.currentTime = 0;
+            audio.play();
+        }
+        const keys = Array.from(document.querySelectorAll('.key'));
+        keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+        window.addEventListener('keydown', playSound);
+    </script>
+    
+</body>
+
+</html>
